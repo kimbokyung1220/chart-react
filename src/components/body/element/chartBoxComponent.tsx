@@ -75,7 +75,7 @@ export default ChartBoxComponent
 
 export function DoubleLineChartConfig(props:resultProps){
 
-    const basicDate = props.searchData.map((item) => Number(item.basicDate))
+    const basicDate = props.searchData.map((item) => String(item.basicDate))
     const impCnt = props.searchData.map((item) => Number(item.impCnt));
     const clickCnt = props.searchData.map((item) => Number(item.clickCnt));
 

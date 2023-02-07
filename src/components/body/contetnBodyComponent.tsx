@@ -30,7 +30,7 @@ const ContetnBodyComponent = () => {
     const searchOnclick = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080/api/sample', // 확인 필요 => emv파일로 common으로 사용
+            url: 'http://localhost:8080/api/grid', // 확인 필요 => emv파일로 common으로 사용
             // responseType: 'json',
             data: {
                 //piker date
@@ -41,8 +41,8 @@ const ContetnBodyComponent = () => {
                 'Content-Type': 'application/json'
         }})
             .then((response) => {
-                const data = response.data.rowData
-                //console.log(data)
+                const data = response.data.data
+                console.log(data)
 
                 // 전체 데이터
                 setSearchData(data)
