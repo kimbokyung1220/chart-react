@@ -8,7 +8,7 @@ const AppComponent = () => {
             <div className="content">
                 {/* 본문 헤더 */}
                 <div className="content-header">
-                    <ContentHeader headerTitle={"사라질 홈이다."} />
+                    <ContentHeader headerTitle={"로 그 인 🔐 "} />
                 </div>
                 {/* 본문 내용 */}
                 <div className="content-body">
