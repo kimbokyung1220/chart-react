@@ -52,6 +52,7 @@ const ContetnBodyComponent = () => {
                 console.log(error);
             });
     };
+    
 
     return (
         <>
@@ -95,6 +96,3 @@ const ContetnBodyComponent = () => {
 }
 
 export default ContetnBodyComponent;
-
-
-fc
