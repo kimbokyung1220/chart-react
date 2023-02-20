@@ -20,7 +20,7 @@ function Main() {
                 <BrowserRouter>
                     <Routes>
                         {/* 본문 */}
-                        <Route path="/sample" element={<Content />} />
+                        <Route path="/chart" element={<Content />} />
                     </Routes>
                 </BrowserRouter>
             </div>

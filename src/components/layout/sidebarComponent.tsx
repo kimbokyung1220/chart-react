@@ -96,7 +96,7 @@ const sidebarComponent = () => {
                                     <a href="/view/advReport/advReport01">심플 리포트</a>
                                 </li>
                                 <li className="two-depth-title selected">
-                                    <a href='/sample'>차트 리포트</a>
+                                    <a href='/chart'>차트 리포트</a>
                                 </li>
                                 <li className="two-depth-title">
                                     <a href="/view/advReport/advReport03">미니멀 리포트</a>
