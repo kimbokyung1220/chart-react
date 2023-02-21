@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from "axios";
-import qs from 'qs';
-import { config } from 'process';
+import AuthContext from './store/auth-context';
 
 const AppBodyComponent = () => {
+    const authCtx = useContext(AuthContext);
+
+    // [ Login 버튼 클릭 ]
     const loginEvent = (values: any) => {
         console.log('Success:', values);
 
@@ -14,16 +16,30 @@ const AppBodyComponent = () => {
             'password': values.PW
         };
         // const config = { "Content-Type": 'application/json' };
-
+        // useContext에서 로그인함수 호출 => localStorage에 토큰값 set
         axios.post(url, data)
             .then(res => {
                 // handle success
-                console.log("res");
-                console.log(res);
+                // console.log("handle success");
+                // console.log(res);
+                // const accessToken = res.data.accessToken;
+                // console.log(res.data)
+                // console.log("res.data**************")
+
+
+                // token이 true면 localStarage에 'accessToken'이라는 키 값으로 token을 저장
+                // if (res.data.accessToken) {
+                //     localStorage.setItem('accessToken', accessToken);
+                // }
+
+                authCtx.login(res.data)
+                console.log("1111111")
+
+                
             })
             .catch(erro => {
                 // handle error
-                console.log("erro");
+                console.log("handle error");
                 console.log(erro);
             })
             .then(() => {

@@ -18,7 +18,7 @@ const AuthContext = React.createContext({
     isSuccess: false,
     isGetSuccess: false,
     signup: (memberid: string, password: string) => { },
-    login: (memberid: string, password: string) => { },
+    login: (data: any) => { },
     logout: () => { },
     getUser: () => { }
 });
@@ -58,23 +58,17 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     }
 
     // 로그인 함수
-    const loginHandler = (memberid: string, password: string) => {
+    const loginHandler = (data: any) => {
         setIsSuccess(false);
-        console.log(isSuccess);
+        console.log("login함수 + isSuccess--------------");
+        console.log(data)
 
-        const data = authAction.loginActionHandler(memberid, password);
-        data.then((result) => {
-            if (result !== null) {
-                const loginData: LoginToken = result.data;
-                setToken(loginData.accessToken);
-                logoutTimer = setTimeout(
-                    logoutHandler,
-                    authAction.loginTokenHandler(loginData.accessToken, loginData.tokenExpiresIn)
-                );
-                setIsSuccess(true);
-                console.log(isSuccess);
-            }
-        })
+        if(data !== null) {
+            setToken(data.accessToken);
+            localStorage.setItem('accessToken', token)
+            //alert(token);
+        }
+
     };
 
     // 먼저 이 함수는 이후 useEffect를 통해 토큰이 없어지면 자동으로 로그아웃을 실행하게 할 것이므로, 무한루프를 막기 위해 useCallback으로 감싸줌
@@ -108,6 +102,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
             logoutTimer = setTimeout(logoutHandler, tokenData.duration);
         }
     }, [tokenData, logoutHandler]);
+
+    useEffect(() => {
+ 
+    }, [token]);
 
 
     const contextValue = {

@@ -18,6 +18,8 @@ import '../src/static/css/fonts/Pretendard/fonts.css';
 function App() {
   const authCtx = useContext(AuthContext);
 
+  //const token = localStorage.getItem('accessToken')
+
   return (
     <>
 
@@ -31,8 +33,10 @@ function App() {
             <Routes>
               {/* 본문 */}
               <Route path="/login" element={<AppContent />} />
-              <Route path="/*" element={!authCtx.isLoggedIn ? <Navigate replace to="/login" /> : <AppContent />} />
-              <Route path="/chart" element={!authCtx.isLoggedIn ? <Content /> : <Navigate replace to='/login' /> } />
+              <Route path="/chart" element={<Content /> } />
+              <Route path="/*" element={!authCtx.isLoggedIn ? <Navigate replace to="/login" /> : <Content />} />
+
+              {/* <Route path="/chart" element={!authCtx.isLoggedIn ? <Content /> : <Navigate replace to='/login' /> } /> */}
             </Routes>
           </BrowserRouter>
         </AuthContextProvider>
