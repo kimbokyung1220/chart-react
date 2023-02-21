@@ -31,7 +31,8 @@ function App() {
             <Routes>
               {/* 본문 */}
               <Route path="/login" element={<AppContent />} />
-              <Route path="/chart" element={!authCtx.isLoggedIn ? <Navigate to='/login' /> : <Content />} />
+              <Route path="/*" element={!authCtx.isLoggedIn ? <Navigate replace to="/login" /> : <AppContent />} />
+              <Route path="/chart" element={!authCtx.isLoggedIn ? <Content /> : <Navigate replace to='/login' /> } />
             </Routes>
           </BrowserRouter>
         </AuthContextProvider>
