@@ -5,6 +5,7 @@ import AppContent from './components/layout/appComponent';
 import Content from './components/layout/contentComponent'
 import { AuthContextProvider } from './components/body/store/auth-context';
 import AuthContext from './components/body/store/auth-context';
+import HomeContent from './components/layout/homeComponent';
 
 import 'antd/dist/antd.css'
 import './static/css/common.css'
@@ -18,8 +19,6 @@ import '../src/static/css/fonts/Pretendard/fonts.css';
 function App() {
   const authCtx = useContext(AuthContext);
 
-  //const token = localStorage.getItem('accessToken')
-
   return (
     <>
 
@@ -30,14 +29,20 @@ function App() {
         {/*  URL의 이동을 토큰이 존재하냐 안하냐의 여부로 제어  */}
         <AuthContextProvider>
           <BrowserRouter>
-            <Routes>
-              {/* 본문 */}
-              <Route path="/login" element={<AppContent />} />
-              <Route path="/chart" element={<Content /> } />
-              <Route path="/*" element={!authCtx.isLoggedIn ? <Navigate replace to="/login" /> : <Content />} />
-
-              {/* <Route path="/chart" element={!authCtx.isLoggedIn ? <Content /> : <Navigate replace to='/login' /> } /> */}
-            </Routes>
+            {authCtx.isLoggedIn ? (
+              <Routes>
+                <Route path="/" element={<Navigate replace to="/home" />} />
+                <Route path="/home" element={<AppContent />} />
+                <Route path="/chart" element={<Content />} />
+                <Route path="/chart" element={<Navigate replace to="/chart" />} />
+              </Routes>
+            ) : (
+              <Routes>
+                <Route path="/*" element={<Navigate replace to="/login" />} />
+                <Route path="/login" element={<AppContent />} />
+              </Routes>
+            )}
+          
           </BrowserRouter>
         </AuthContextProvider>
       </div>

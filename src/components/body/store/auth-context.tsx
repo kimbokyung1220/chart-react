@@ -1,5 +1,5 @@
-import { access } from "fs";
-import React, { useState, useEffect, useCallback } from "react";
+import { Component } from "ag-grid-community";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 
 type Props = { children?: React.ReactNode }
 
@@ -24,14 +24,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // 토큰값으로 check
     const userIsLoggedIn = !!token;
 
-    // 로그인 함수
+    // 1. 로그인 함수
     const loginHandler = (data: any) => {
-            localStorage.setItem('accessToken', data.accessToken)
-            setToken(data.accessToken);
-            //alert(token);
+        setToken(data.accessToken)
+        console.log("ddddd" + userIsLoggedIn)
     };
 
-    // 먼저 이 함수는 이후 useEffect를 통해 토큰이 없어지면 자동으로 로그아웃을 실행하게 할 것이므로, 무한루프를 막기 위해 useCallback으로 감싸줌
+    // 2. 먼저 이 함수는 이후 useEffect를 통해 토큰이 없어지면 자동으로 로그아웃을 실행하게 할 것이므로, 무한루프를 막기 위해 useCallback으로 감싸줌
     const logoutHandler = useCallback(() => {
         console.log("ss")
     }, []);
@@ -39,14 +38,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
     // retrieveStoredToken로 받은 token값과, logoutHandler를 종속변수로 삼는 useEffect훅
     useEffect(() => {
-        if(localStorage.getItem('accessToken') !== null ) {
-            //setToken(localStorage.getItem('accessToken'))
-            console.log(token)
-            console.log(userIsLoggedIn)
+        if (token !== null) {
+            localStorage.setItem('accessToken', token)
         } else {
-            console.log("dddddddddddd")
+            localStorage.removeItem('accessToken')
         }
     }, [token]);
+
 
     const contextValue = {
         token,
@@ -54,6 +52,8 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
         login: loginHandler,
         logout: logoutHandler
     }
+
+
 
     return (
         <AuthContext.Provider value={contextValue}>

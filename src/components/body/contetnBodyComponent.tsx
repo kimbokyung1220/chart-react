@@ -4,17 +4,17 @@ import StatisticsTable from "./element/statisticsTableComponent";
 import React, { useState } from 'react';
 import axios from 'axios';
 import moment from "moment";
-import {eventProps} from "./element/searchBoxComponent";
+import { eventProps } from "./element/searchBoxComponent";
 import { pick } from "highcharts";
 
 const ContetnBodyComponent = () => {
 
 
     // API Response Data (All) 상태
-    const[searchData, setSearchData] = useState([]);
- 
+    const [searchData, setSearchData] = useState([]);
+
     // piker Date 상태
-    const[pikerDate, setPikerDate] = useState<eventProps['pikerDate']>([
+    const [pikerDate, setPikerDate] = useState<eventProps['pikerDate']>([
         moment(),
         moment()
     ]);
@@ -24,7 +24,7 @@ const ContetnBodyComponent = () => {
     const endDate: any = pikerDate![1]
 
     // pikerDate onchageEvent
-    const handleChangeDate: eventProps['changeDate'] = (e) => setPikerDate(e); 
+    const handleChangeDate: eventProps['changeDate'] = (e) => setPikerDate(e);
 
     // 선택 조건 조회 event
     const searchOnclick = () => {
@@ -34,12 +34,13 @@ const ContetnBodyComponent = () => {
             // responseType: 'json',
             data: {
                 //piker date
-                startDate : startDate,
-                endDate : endDate
+                startDate: startDate,
+                endDate: endDate
             },
             headers: {
                 'Content-Type': 'application/json'
-        }})
+            }
+        })
             .then((response) => {
                 const data = response.data.data
                 console.log(data)
@@ -52,45 +53,46 @@ const ContetnBodyComponent = () => {
                 console.log(error);
             });
     };
-    
+
 
     return (
         <>
-            <div className="container-fluid">
+            <div id="wrap" className="wrap">
+                <div className="container-fluid">
 
-                {/* 선택 조건 조회 */}
-                <div className="row">
-                    <div className="col col-12">
-                        {/* <section className="wrap-section wrap-filter-"> */}
+                    {/* 선택 조건 조회 */}
+                    <div className="row">
+                        <div className="col col-12">
+                            {/* <section className="wrap-section wrap-filter-"> */}
                             {/* <SearchBox data={setData}/> */}
-                            <SearchBox 
+                            <SearchBox
                                 searchEvent={searchOnclick}
                                 pikerDate={pikerDate}
                                 changeDate={handleChangeDate}
                             />
-                        {/* </section> */}
+                            {/* </section> */}
+                        </div>
                     </div>
-                </div>
 
-                {/* 차트 */}
-                <div className="row">
-                    <div className="col col-12">
-                        <section className="wrap-section wrap-chart">
-                            <ChartBox searchData={searchData}/>
-                        </section>
+                    {/* 차트 */}
+                    <div className="row">
+                        <div className="col col-12">
+                            <section className="wrap-section wrap-chart">
+                                <ChartBox searchData={searchData} />
+                            </section>
+                        </div>
                     </div>
-                </div>
 
-                {/* 통계 표 */}
-                <div className="row">
-                    <div className="col col-12">
-                        <section className="wrap-section wrap-datagrid">
-                            <StatisticsTable searchData={searchData} />
-                        </section>
+                    {/* 통계 표 */}
+                    <div className="row">
+                        <div className="col col-12">
+                            <section className="wrap-section wrap-datagrid">
+                                <StatisticsTable searchData={searchData} />
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </>
     );
 }

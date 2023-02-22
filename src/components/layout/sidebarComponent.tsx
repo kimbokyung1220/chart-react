@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
-
 
 
 const sidebarComponent = () => {
+
     return (
         <>
             <aside className="sidebar">

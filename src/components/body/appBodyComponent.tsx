@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from "axios";
 import AuthContext from './store/auth-context';
@@ -6,11 +6,8 @@ import AuthContext from './store/auth-context';
 const AppBodyComponent = () => {
     const authCtx = useContext(AuthContext);
 
-
     // [ Login 버튼 클릭 ]
     const loginEvent = (values: any) => {
-//        console.log('Success:', values);
-
         const url = "http://localhost:8080/api/login";
         const data = {
             'memberid': values.ID,
@@ -20,7 +17,7 @@ const AppBodyComponent = () => {
         // useContext에서 로그인함수 호출 => localStorage에 토큰값 set
         axios.post(url, data)
             .then(res => {  
-                //localStorage.setItem('accessToken', res.data.accessToken)
+                // 로그인
                 authCtx.login(res.data)
             })
             .catch(erro => {
@@ -33,12 +30,10 @@ const AppBodyComponent = () => {
             });
     };
 
-    
-
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-    // 로그인 event
+    
 
     return (
         <>
