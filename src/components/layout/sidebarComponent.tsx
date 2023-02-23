@@ -1,6 +1,13 @@
+import { useContext } from "react";
+import AuthContext from "../body/store/auth-context";
 
 
-const sidebarComponent = () => {
+const SidebarComponent = () => {
+    const authCtx = useContext(AuthContext);
+
+    function logoutEvent() {
+        authCtx.logout()
+    }
 
     return (
         <>
@@ -221,7 +228,8 @@ const sidebarComponent = () => {
                                                         className="btn">내 정보</button>
                                                     <i className="bar" />
                                                     <button type="button"
-                                                        className="btn">로그아웃</button>
+                                                        className="btn"
+                                                        onClick={logoutEvent}>로그아웃</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -267,4 +275,4 @@ const sidebarComponent = () => {
     );
 }
 
-export default sidebarComponent;
+export default SidebarComponent;

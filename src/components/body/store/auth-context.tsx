@@ -27,23 +27,30 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // 1. 로그인 함수
     const loginHandler = (data: any) => {
         setToken(data.accessToken)
-        console.log("ddddd" + userIsLoggedIn)
+        if (token !== null) {
+            localStorage.setItem('accessToken', token)
+        }
+
+        console.log("토큰값" + userIsLoggedIn)
     };
 
     // 2. 먼저 이 함수는 이후 useEffect를 통해 토큰이 없어지면 자동으로 로그아웃을 실행하게 할 것이므로, 무한루프를 막기 위해 useCallback으로 감싸줌
     const logoutHandler = useCallback(() => {
-        console.log("ss")
+        setToken('');
+        localStorage.clear()
     }, []);
 
 
     // retrieveStoredToken로 받은 token값과, logoutHandler를 종속변수로 삼는 useEffect훅
     useEffect(() => {
         if (token !== null) {
+           console.log("토큰있어요")
+           console.log(userIsLoggedIn)
             localStorage.setItem('accessToken', token)
         } else {
             localStorage.removeItem('accessToken')
         }
-    }, [token]);
+    }, [token, logoutHandler]);
 
 
     const contextValue = {

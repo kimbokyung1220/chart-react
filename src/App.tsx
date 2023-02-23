@@ -17,13 +17,7 @@ import '../src/static/css/fonts/Pretendard/fonts.css';
 
 
 function App() {
-  // const authCtx = useContext(AuthContext);
-  // console.log(authCtx.isLoggedIn)
-  // console.log("=== 화면 ====")
-
-  // useEffect(() => {
-  //     console.log(authCtx.token)
-  // }, [authCtx.token])
+  const authCtx = useContext(AuthContext);
 
   console.log(localStorage.getItem('accessToken'))
 
@@ -38,7 +32,7 @@ function App() {
         <BrowserRouter>
         
           
-            {!localStorage.getItem('accessToken') ? (
+            {!authCtx.isLoggedIn ? (
               <Routes>
                 <Route path="/*" element={<Navigate replace to="/login" />} />
                 <Route path="/login" element={<AppContent />} />

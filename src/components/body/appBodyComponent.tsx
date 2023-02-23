@@ -6,12 +6,8 @@ import { Navigate   } from 'react-router-dom';
 import { TokenClass } from 'typescript';
 
 const AppBodyComponent = () => {
-    const [token, setToken] = useState("");
 
-console.log("login 호출111")
-    const onClickImg = () => {
-        return <Navigate to="/home" />;
-      }
+    const authCtx = useContext(AuthContext);
 
     // [ Login 버튼 클릭 ]
     const loginEvent = (values: any) => {
@@ -26,13 +22,7 @@ console.log("login 호출111")
             .then(res => {  
                 // 로그인
                 console.log("login 호출")
-                // authCtx.login(res.data)
-                if(res.data !== null) {
-                    localStorage.setItem('accessToken', res.data.accessToken)
-                    
-                   setToken(res.data.accessToken)
-                }
-                
+                authCtx.login(res.data)
 
             })
             .catch(erro => {
@@ -50,13 +40,6 @@ console.log("login 호출111")
         console.log('Failed:', errorInfo);
     };
 
-    useEffect(() => {
-        if(token !== undefined) {
-            console.log(token)
-           
-        }
-    },[token])
-
     return (
         <>
             <div>
@@ -68,6 +51,7 @@ console.log("login 호출111")
                     onFinish={loginEvent}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
+                    style={{float: 'left'}}
                 >
                     <Form.Item
                         label="ID"
