@@ -11,6 +11,7 @@ type LoginToken = {
 // createContext는 각각의 컴포넌트에 포함되는 객체를 만드는 로직
 const AuthContext = React.createContext({
     token: localStorage.getItem('accessToken'),
+    auth: localStorage.getItem('auth'),
     isLoggedIn: false,
     login: (data: any) => { },
     logout: () => { }
@@ -20,6 +21,7 @@ const AuthContext = React.createContext({
 export const AuthContextProvider: React.FC<Props> = (props) => {
 
     const [token, setToken] = useState(localStorage.getItem('accessToken'));
+    const [auth, setAuth] = useState(localStorage.getItem('auth'));
 
     // 토큰값으로 check
     const userIsLoggedIn = !!token;
@@ -27,34 +29,31 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     // 1. 로그인 함수
     const loginHandler = (data: any) => {
         setToken(data.accessToken)
-        if (token !== null) {
-            localStorage.setItem('accessToken', token)
-        }
-
-        console.log("토큰값" + userIsLoggedIn)
+        setAuth(data.authority)
+        console.log("ddddd" + userIsLoggedIn)
     };
 
     // 2. 먼저 이 함수는 이후 useEffect를 통해 토큰이 없어지면 자동으로 로그아웃을 실행하게 할 것이므로, 무한루프를 막기 위해 useCallback으로 감싸줌
     const logoutHandler = useCallback(() => {
-        setToken('');
-        localStorage.clear()
+        setToken(null);
+        setAuth(null);
     }, []);
 
 
     // retrieveStoredToken로 받은 token값과, logoutHandler를 종속변수로 삼는 useEffect훅
     useEffect(() => {
         if (token !== null) {
-           console.log("토큰있어요")
-           console.log(userIsLoggedIn)
-            localStorage.setItem('accessToken', token)
+            localStorage.setItem('accessToken', token);
+            // localStorage.setItem('auth', auth);
         } else {
-            localStorage.removeItem('accessToken')
+            localStorage.clear();
         }
-    }, [token, logoutHandler]);
+    }, [token]);
 
 
     const contextValue = {
         token,
+        auth,
         isLoggedIn: userIsLoggedIn,
         login: loginHandler,
         logout: logoutHandler

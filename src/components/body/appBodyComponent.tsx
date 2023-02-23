@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from "axios";
 import AuthContext from './store/auth-context';
-import { Navigate   } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { TokenClass } from 'typescript';
 
 const AppBodyComponent = () => {
@@ -19,9 +19,9 @@ const AppBodyComponent = () => {
         // const config = { "Content-Type": 'application/json' };
         // useContext에서 로그인함수 호출 => localStorage에 토큰값 set
         axios.post(url, data)
-            .then(res => {  
+            .then(res => {
                 // 로그인
-                console.log("login 호출")
+
                 authCtx.login(res.data)
 
             })
@@ -32,7 +32,7 @@ const AppBodyComponent = () => {
             })
             .then(() => {
                 // always executed
-               
+
             });
     };
 
@@ -51,7 +51,7 @@ const AppBodyComponent = () => {
                     onFinish={loginEvent}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
-                    style={{float: 'left'}}
+                    style={{ float: 'left' }}
                 >
                     <Form.Item
                         label="ID"

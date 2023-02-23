@@ -18,9 +18,6 @@ import '../src/static/css/fonts/Pretendard/fonts.css';
 
 function App() {
   const authCtx = useContext(AuthContext);
-
-  console.log(localStorage.getItem('accessToken'))
-
   return (
     <>
 
@@ -30,20 +27,20 @@ function App() {
 
         {/*  URL의 이동을 토큰이 존재하냐 안하냐의 여부로 제어  */}
         <BrowserRouter>
-        
-          
             {!authCtx.isLoggedIn ? (
               <Routes>
                 <Route path="/*" element={<Navigate replace to="/login" />} />
+                <Route path="*" element={<Navigate replace to="/login" />} /> //path='*' 는 어떤 매치 결과도 없을 때
                 <Route path="/login" element={<AppContent />} />
               </Routes>
             ) : (
               <Routes>
                 <Route path="/home" element={<HomeContent />} />
                 <Route path="/" element={<Navigate replace to="/home" />} />
+                <Route path="*" element={<Navigate replace to="/home" />} />
                 <Route path="/login" element={<Navigate replace to="/home" />} />
-                <Route path="/chart" element={<Content />} />
-                <Route path="/chart" element={<Navigate replace to="/chart" />} />
+                <Route path="/chart" element={authCtx.auth === 'ROLE_ADMIN' ? <Content /> : <Navigate replace to="/home" /> } />
+                <Route path="/chart" element={authCtx.auth === 'ROLE_ADMIN' ? <Navigate replace to="/chart" /> : <Navigate replace to="/home" />} />
               </Routes>
             )}
         </BrowserRouter>

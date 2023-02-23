@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom' 
 import { useContext } from "react";
 import AuthContext from "../body/store/auth-context";
 
@@ -86,38 +87,19 @@ const SidebarComponent = () => {
                     </div>
                     <ul className="sidebar-menu tree"
                         data-widget="tree">
-                        <li className="one-depth treeview">
-                            <a className="one-depth-title"
-                                href="#!">
-                                <div className="box-left">
-                                    <i className="ico ico-32 ico-menu-03" />
-                                    <span className="fz-16">광고주 리포트</span>
-                                </div>
-                                <div className="box-right">
-                                    <i className="ico ico-16 ico-arrow" />
-                                </div>
-                            </a>
-                            <ul className="two-depth treeview-menu menu-open">
-                                <li className="two-depth-title">
-                                    <a href="/view/advReport/advReport01">심플 리포트</a>
-                                </li>
-                                <li className="two-depth-title selected">
-                                    <a href='/chart'>차트 리포트</a>
-                                </li>
-                                <li className="two-depth-title">
-                                    <a href="/view/advReport/advReport03">미니멀 리포트</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a className="one-depth-title"
-                                href="/view/bulkMng">
-                                <div className="box-left">
-                                    <i className="ico ico-32 ico-menu-01" />
-                                    <span className="fz-16">대량관리</span>
-                                </div>
-                            </a>
-                        </li>
+                        {authCtx.auth === 'ROLE_ADMIN' ? 
+                         <li>
+                         <a className="one-depth-title"
+                             href="/chart">
+                             <div className="box-left">
+                                 <i className="ico ico-32 ico-menu-01" />
+                                 <span className="fz-16">차트 리포트</span>
+                             </div>
+                         </a>
+                     </li> : 
+                    null
+                     }
+                       
                         <li>
                             <a className="one-depth-title"
                                 href="/example/publish">
