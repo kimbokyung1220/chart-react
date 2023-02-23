@@ -2,16 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from "axios";
 import AuthContext from './store/auth-context';
-import { Navigate   } from 'react-router-dom';
-import { TokenClass } from 'typescript';
+interface gg {
+    token: string;
+}
 
 const AppBodyComponent = () => {
-    const [token, setToken] = useState("");
-
-console.log("login 호출111")
-    const onClickImg = () => {
-        return <Navigate to="/home" />;
-      }
+    // const authCtx = useContext(AuthContext);
+    
+    const [token, setToken] = useState();
 
     // [ Login 버튼 클릭 ]
     const loginEvent = (values: any) => {
@@ -25,15 +23,10 @@ console.log("login 호출111")
         axios.post(url, data)
             .then(res => {  
                 // 로그인
-                console.log("login 호출")
                 // authCtx.login(res.data)
-                if(res.data !== null) {
-                    localStorage.setItem('accessToken', res.data.accessToken)
-                    
-                   setToken(res.data.accessToken)
-                }
-                
-
+                setToken(res.data.accessToken);
+                localStorage.setItem('t', res.data.accessToken)
+                console.log(token)
             })
             .catch(erro => {
                 // handle error
@@ -42,21 +35,18 @@ console.log("login 호출111")
             })
             .then(() => {
                 // always executed
-               
             });
     };
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-
+    
     useEffect(() => {
-        if(token !== undefined) {
-            console.log(token)
-           
-        }
-    },[token])
-
+       if(token === undefined) {
+        console.log("토큰 없다")
+       }
+    }, [])
     return (
         <>
             <div>

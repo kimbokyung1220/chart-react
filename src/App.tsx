@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/layout/sidebarComponent'
 import AppContent from './components/layout/appComponent';
@@ -17,7 +17,15 @@ import '../src/static/css/fonts/Pretendard/fonts.css';
 
 
 function App() {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  // console.log(authCtx.isLoggedIn)
+  // console.log("=== 화면 ====")
+
+  // useEffect(() => {
+  //     console.log(authCtx.token)
+  // }, [authCtx.token])
+
+  console.log(localStorage.getItem('accessToken'))
 
   return (
     <>
@@ -27,24 +35,24 @@ function App() {
         <Sidebar />
 
         {/*  URL의 이동을 토큰이 존재하냐 안하냐의 여부로 제어  */}
-        <AuthContextProvider>
-          <BrowserRouter>
-            {authCtx.isLoggedIn ? (
-              <Routes>
-                <Route path="/" element={<Navigate replace to="/home" />} />
-                <Route path="/home" element={<AppContent />} />
-                <Route path="/chart" element={<Content />} />
-                <Route path="/chart" element={<Navigate replace to="/chart" />} />
-              </Routes>
-            ) : (
+        <BrowserRouter>
+        
+          
+            {!localStorage.getItem('accessToken') ? (
               <Routes>
                 <Route path="/*" element={<Navigate replace to="/login" />} />
                 <Route path="/login" element={<AppContent />} />
               </Routes>
+            ) : (
+              <Routes>
+                <Route path="/home" element={<HomeContent />} />
+                <Route path="/" element={<Navigate replace to="/home" />} />
+                <Route path="/login" element={<Navigate replace to="/home" />} />
+                <Route path="/chart" element={<Content />} />
+                <Route path="/chart" element={<Navigate replace to="/chart" />} />
+              </Routes>
             )}
-          
-          </BrowserRouter>
-        </AuthContextProvider>
+        </BrowserRouter>
       </div>
 
     </>
