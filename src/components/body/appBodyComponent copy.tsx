@@ -7,7 +7,7 @@ interface gg {
 }
 
 const AppBodyComponent = () => {
-    // const authCtx = useContext(AuthContext);
+    const authCtx = useContext(AuthContext);
     
     const [token, setToken] = useState();
 
@@ -21,11 +21,12 @@ const AppBodyComponent = () => {
         // const config = { "Content-Type": 'application/json' };
         // useContext에서 로그인함수 호출 => localStorage에 토큰값 set
         axios.post(url, data)
-            .then(res => {  
+            .then(res => { 
+                console.log("gg") 
                 // 로그인
-                // authCtx.login(res.data)
-                setToken(res.data.accessToken);
-                localStorage.setItem('t', res.data.accessToken)
+                authCtx.login(res.data)
+                // setToken(res.data.accessToken);
+                // localStorage.setItem('t', res.data.accessToken)
                 console.log(token)
             })
             .catch(erro => {

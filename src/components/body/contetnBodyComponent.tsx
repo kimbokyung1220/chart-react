@@ -1,14 +1,17 @@
 import SearchBox from "./element/searchBoxComponent";
 import ChartBox from "./element/chartBoxComponent";
 import StatisticsTable from "./element/statisticsTableComponent";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import moment from "moment";
 import { eventProps } from "./element/searchBoxComponent";
 import { pick } from "highcharts";
+import AuthContext from "./store/auth-context";
 
 const ContetnBodyComponent = () => {
 
+    const authCtx = useContext(AuthContext);
+    
 
     // API Response Data (All) 상태
     const [searchData, setSearchData] = useState([]);
@@ -30,15 +33,16 @@ const ContetnBodyComponent = () => {
     const searchOnclick = () => {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080/api/grid', // 확인 필요 => emv파일로 common으로 사용
+            url: 'http://localhost:8080/api/chart', // 확인 필요 => emv파일로 common으로 사용
             // responseType: 'json',
-            data: {
-                //piker date
-                startDate: startDate,
-                endDate: endDate
-            },
+            // data: {
+            //     //piker date
+            //     startDate: startDate,
+            //     endDate: endDate
+            // },
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                // 'Authorization': authCtx.token
             }
         })
             .then((response) => {
@@ -46,7 +50,7 @@ const ContetnBodyComponent = () => {
                 console.log(data)
 
                 // 전체 데이터
-                setSearchData(data)
+              //  setSearchData(data)
 
             })
             .catch((error) => {

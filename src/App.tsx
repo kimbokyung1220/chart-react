@@ -18,6 +18,7 @@ import '../src/static/css/fonts/Pretendard/fonts.css';
 
 function App() {
   const authCtx = useContext(AuthContext);
+
   return (
     <>
 
