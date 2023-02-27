@@ -26,9 +26,7 @@ const AppBodyComponent = () => {
 
             })
             .catch(erro => {
-                // handle error
-                console.log("handle error");
-                console.log(erro);
+                console.log("회원가입이 되어 있지 않습니다")
             })
             .then(() => {
                 // always executed

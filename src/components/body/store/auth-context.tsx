@@ -30,7 +30,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     const loginHandler = (data: any) => {
         setToken(data.accessToken)
         setAuth(data.authority)
-        console.log("ddddd" + userIsLoggedIn)
     };
 
     // 2. 먼저 이 함수는 이후 useEffect를 통해 토큰이 없어지면 자동으로 로그아웃을 실행하게 할 것이므로, 무한루프를 막기 위해 useCallback으로 감싸줌

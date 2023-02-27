@@ -34,12 +34,13 @@ const ContetnBodyComponent = () => {
         axios({
             method: 'GET',
             url: 'http://localhost:8080/api/chart', // 확인 필요 => emv파일로 common으로 사용
-            // responseType: 'json',
-            // data: {
-            //     //piker date
-            //     startDate: startDate,
-            //     endDate: endDate
-            // },
+            responseType: 'json',
+            data: {
+                //piker date
+                startDate: startDate,
+                endDate: endDate
+            }
+            ,
             headers: {
                 'Content-Type': 'application/json',
                 // 'Authorization': authCtx.token
@@ -50,7 +51,7 @@ const ContetnBodyComponent = () => {
                 console.log(data)
 
                 // 전체 데이터
-              //  setSearchData(data)
+               setSearchData(data)
 
             })
             .catch((error) => {
